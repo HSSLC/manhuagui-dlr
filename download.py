@@ -22,6 +22,7 @@ def downloadCh(url):
             except:
                 print('頁面 %s 下載失敗 重試中...' % url, end='')
                 print('等待2秒...')
+                #每次重試間隔
                 time.sleep(2)
                 continue
             filename = str(counter) + '_' + os.path.basename(url)
@@ -57,7 +58,7 @@ def downloadCh(url):
         print(os.path.basename(pgUrl))
         print('%s / %s' % (i, length), end='\r')
         downloadPg(pgUrl, e, m, i)
-        #page間隔2秒
+        #每頁間隔2秒
         time.sleep(2)
         i += 1
     os.chdir(os.path.join('..', '..', '..'))

@@ -3,6 +3,7 @@ from trans import tr
 
 
 
+#這function名是在致敬反反向工程工程師
 
 def packed(functionFrame, a, c, data):
     def deb(ic, ia):

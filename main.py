@@ -1,22 +1,27 @@
 import re, time, bs4, requests
 from download import downloadCh
 
-baseUrl = 'https://www.manhuagui.com/comic/'
+check_re = r'^https?://([a-zA-Z0-9]*\.)?manhuagui.com/comic/([0-9]+)/?'
+request_url = 'https://www.manhuagui.com/comic/%s'
 host = 'https://www.manhuagui.com'
 
 def main():
     print('僅供學術研究交流使用，勿作為商業用途')
     while True:
         print('輸入URL:')
+        #格式:https://*.manhuagui.com/comic/XXXXX
+        #是否進入章節都沒關係
+        #例如https://*.manhuagui.com/comic/XXXXX/XXXXX.html也行
+        #反正要得只有id
         url = input()
         try:
-            checked_url = re.match(r'^(' + baseUrl + '[0-9]+/?)', url).group(1)
+            checked_id = re.match(check_re, url).group(2)
             break
         except:
             print('無效的網址')
             continue
     try:
-        res = requests.get(checked_url)
+        res = requests.get(request_url % checked_id)
         res.raise_for_status()
     except:
         print('錯誤:可能是沒網路或被ban ip?')
@@ -57,9 +62,11 @@ def main():
         for ch in block:
             downloadCh(host + ch[1])
             print('延遲5秒...')
+            #每話間隔5秒
             time.sleep(5)
 main()
 
 #各話間會延遲5秒 各頁間會延遲2秒
 #防止被ban ip
-#延遲數值是保守值 可自行依注解更改
+#目前延遲數值是保守值 可自行依注解更改
+#反正執行後就能afk了
