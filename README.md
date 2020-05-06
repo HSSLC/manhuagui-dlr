@@ -1,8 +1,10 @@
 # manhuagui-dlr
 
-純Python製作，執行過程不需要使用外部JS環境
+純Python製作，執行過程不需要任何外部JS環境
 
 包含自動webp->jpg，可選
+
+初始化完後就能完全放置，過程中只有主控台視窗，可以繼續使用電腦不受影響
 
 required:  
 * lzstring
