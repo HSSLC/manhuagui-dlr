@@ -33,7 +33,7 @@ def main():
     for ch_index in range(len(ch_list)):
         ch = ch_list[ch_index]
         print(str(ch_index).ljust(4), ch[0])
-    print('輸入上列編號選擇下載話數(ex:1-2 5-8 10 將會下載編號1, 2, 5, 6, 7, 8, 10的章節)')
+    print('輸入上列編號(ex:1-2 5-8 10 -> 1, 2, 5, 6, 7, 8, 10)')
     choose_chs = input()
     tmp = re.findall(r'[0-9]+\-?[0-9]*', choose_chs)
     choose_block_list = []
@@ -59,3 +59,7 @@ def main():
             print('延遲5秒...')
             time.sleep(5)
 main()
+
+#各話間會延遲5秒 各頁間會延遲2秒
+#防止被ban ip
+#延遲數值是保守值 可自行依注解更改

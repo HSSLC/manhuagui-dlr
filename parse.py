@@ -24,13 +24,3 @@ def packed(functionFrame, a, c, data):
     pieces = re.split(r'(\b\w+\b)', functionFrame)
     js = ''.join([d[x] if x in d else x for x in pieces])
     return json.loads(re.search(r'^.*\((\{.*\})\).*$', js).group(1))
-
-
-
-
-
-#find all in html
-#^.*\}\(\'(.*)\',(\d*),(\d*),\'([\w|\+|\/|=]*)\'.*$
-#find json in js
-#^.*\((\{.*\})\).*$
-#i.hamreus.com
