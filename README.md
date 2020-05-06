@@ -1,5 +1,4 @@
 # manhuagui-dlr
-低調
 
 required:  
 * lzstring
