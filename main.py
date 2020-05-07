@@ -2,8 +2,8 @@ import re, time, bs4, requests
 from download import downloadCh
 
 check_re = r'^https?://([a-zA-Z0-9]*\.)?manhuagui.com/comic/([0-9]+)/?'
-request_url = 'https://www.manhuagui.com/comic/%s'
-host = 'https://www.manhuagui.com'
+request_url = 'https://tw.manhuagui.com/comic/%s'
+host = 'https://tw.manhuagui.com'
 
 def main():
     print('僅供學術研究交流使用，勿作為商業用途')
