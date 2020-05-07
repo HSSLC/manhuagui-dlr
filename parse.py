@@ -24,4 +24,5 @@ def packed(functionFrame, a, c, data):
         c-=1
     pieces = re.split(r'(\b\w+\b)', functionFrame)
     js = ''.join([d[x] if x in d else x for x in pieces])
+    js = js.replace('\\\'', '\'')
     return json.loads(re.search(r'^.*\((\{.*\})\).*$', js).group(1))
