@@ -1,4 +1,4 @@
-import requests, os, time, subprocess
+import requests, os, time, re
 from get import get
 from PIL import Image
 
@@ -44,7 +44,7 @@ def downloadCh(url):
         return False
     bname = j['bname']
     cname = j['cname']
-    chdir(os.path.join(bname, 'jpg', cname))
+    chdir(os.path.join(re.sub(r'[\\/:*?"<>|]', '_', bname), 'jpg', cname))
     os.chdir(os.path.join('..', '..'))
     chdir(os.path.join('raw', cname))
     length = j['len']
