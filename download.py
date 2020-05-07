@@ -2,7 +2,7 @@ import requests, os, time, re
 from get import get
 from PIL import Image
 
-def downloadCh(url):
+def downloadCh(url, config_json=None):
     def downloadPg(url, e, m, counter):
         h = {'accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
         'accept-encoding': 'gzip, deflate, br',
@@ -46,6 +46,9 @@ def downloadCh(url):
     cname = j['cname']
     chdir(os.path.join(re.sub(r'[\\/:*?"<>|]', '_', bname), 'jpg', cname))
     os.chdir(os.path.join('..', '..'))
+    if config_json:
+        with open('config.json', 'w') as config:
+            config.write(config_json)
     chdir(os.path.join('raw', cname))
     length = j['len']
     print('下載 %s %s 中 共%s頁' % (bname, cname, length))
@@ -58,8 +61,8 @@ def downloadCh(url):
         print(os.path.basename(pgUrl))
         print('%s / %s' % (i, length), end='\r')
         downloadPg(pgUrl, e, m, i)
-        #每頁間隔2秒
-        time.sleep(2)
+        #每頁間隔1秒
+        time.sleep(1)
         i += 1
     os.chdir(os.path.join('..', '..', '..'))
     return True

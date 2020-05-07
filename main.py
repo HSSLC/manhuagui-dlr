@@ -1,5 +1,6 @@
 import re, time, bs4, requests
 from download import downloadCh
+from generate_config import generate_config
 
 check_re = r'^https?://([a-zA-Z0-9]*\.)?manhuagui.com/comic/([0-9]+)/?'
 request_url = 'https://tw.manhuagui.com/comic/%s'
@@ -29,6 +30,12 @@ def main():
     bs = bs4.BeautifulSoup(res.text, 'html.parser')
     title = bs.select('.book-title h1')[0]
     print('標題: %s' % title.text)
+    authors_link = bs.select('a[href^="/author"]')
+    authors = []
+    for author in authors_link:
+        authors.append(author.text)
+    authors = '、'.join(authors)
+    config_json = generate_config(title.text, authors)
     links = bs.select('.chapter-list a')
     links.reverse()
     ch_list = []
@@ -42,6 +49,7 @@ def main():
     choose_chs = input()
     tmp = re.findall(r'[0-9]+\-?[0-9]*', choose_chs)
     choose_block_list = []
+    config_writed = False
     for block in tmp:
         try:
             block = block.split('-')
@@ -60,7 +68,11 @@ def main():
     for area in choose_block_list:
         block = ch_list[area[0]:area[1]+1]
         for ch in block:
-            downloadCh(host + ch[1])
+            if not config_writed:
+                downloadCh(host + ch[1], config_json)
+            else:
+                downloadCh(host + ch[1])
+                config_writed = True
             print('延遲5秒...')
             #每話間隔5秒
             time.sleep(5)
