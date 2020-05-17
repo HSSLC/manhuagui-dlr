@@ -2,7 +2,7 @@ import re, time, bs4, requests
 from download import downloadCh
 from generate_config import generate_config
 
-check_re = r'^https?://([a-zA-Z0-9]*\.)?manhuagui.com/comic/([0-9]+)/?'
+check_re = r'^https?://([a-zA-Z0-9]*\.)?manhuagui\.com/comic/([0-9]+)/?'
 request_url = 'https://tw.manhuagui.com/comic/%s'
 host = 'https://tw.manhuagui.com'
 
