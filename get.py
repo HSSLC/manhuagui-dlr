@@ -1,3 +1,6 @@
+# Development by HSSLCreative
+# Date: 2020/5/6
+
 import requests, re, lzstring
 from parse import packed
 

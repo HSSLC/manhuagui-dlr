@@ -1,12 +1,9 @@
+# Development by HSSLCreative
+# Date: 2020/5/6
+
 def itr(value, num):
     d = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    if value <= 0:
-        return ''
-    else:
-        return itr(int(value/num), num) + d[value % num]
+    return '' if value <= 0 else itr(int(value/num), num) + d[value % num]
 def tr(value, num):
     tmp = itr(value, num)
-    if tmp == '':
-        return '0'
-    else:
-        return tmp
+    return '0' if tmp == '' else tmp

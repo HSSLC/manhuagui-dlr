@@ -1,3 +1,6 @@
+# Development by HSSLCreative
+# Date: 2020/5/6
+
 import requests, os, time, re
 from get import get
 from PIL import Image
@@ -61,8 +64,8 @@ def downloadCh(url, config_json=None):
         print(os.path.basename(pgUrl))
         print('%s / %s' % (i, length), end='\r')
         downloadPg(pgUrl, e, m, i)
-        #每頁間隔1秒
-        time.sleep(1)
+        #每頁間隔0.5秒
+        time.sleep(0.5)
         i += 1
     os.chdir(os.path.join('..', '..', '..'))
     return True

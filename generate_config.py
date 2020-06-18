@@ -1,3 +1,6 @@
+# Development by HSSLCreative
+# Date: 2020/5/6
+
 import json
 
 def generate_config(title, creator, language='zh', folder='jpg', width=800, height=1280, cover=''):

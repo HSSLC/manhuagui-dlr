@@ -1,3 +1,6 @@
+# Development by HSSLCreative
+# Date: 2020/5/6
+
 import re, time, bs4, requests
 from download import downloadCh
 from generate_config import generate_config
