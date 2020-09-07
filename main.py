@@ -1,7 +1,7 @@
 # Development by HSSLCreative
 # Date: 2020/5/6
 
-import re, time, bs4, requests
+import re, time, bs4, requests, lzstring
 from download import downloadCh
 from generate_config import generate_config
 
@@ -40,6 +40,8 @@ def main():
     authors = '、'.join(authors)
     config_json = generate_config(title.text, authors)
     links = bs.select('.chapter-list a')
+    if not links:
+        links = bs4.BeautifulSoup(lzstring.LZString().decompressFromBase64(bs.select('#__VIEWSTATE')[0].attrs.get('value')), 'html.parser').select('.chapter-list a')
     links.reverse()
     ch_list = []
     for link in links:
