@@ -50,7 +50,7 @@ def main():
     for ch_index in range(len(ch_list)):
         ch = ch_list[ch_index]
         print(str(ch_index).ljust(4), ch[0])
-    print('輸入上列編號(ex:1-2 5-8 10 -> 1, 2, 5, 6, 7, 8, 10)')
+    print('輸入上列編號(ex:輸入1-2 5-8 10 將會下載編號 1, 2, 5, 6, 7, 8, 10 的章節)')
     choose_chs = input()
     tmp = re.findall(r'[0-9]+\-?[0-9]*', choose_chs)
     choose_block_list = []
