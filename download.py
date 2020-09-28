@@ -23,7 +23,7 @@ def downloadCh(url, config_json=None):
                 res = requests.get(url, params={'e':e, 'm':m}, headers = h, timeout=10)
                 res.raise_for_status()
             except:
-                print('頁面 %s 下載失敗 重試中...' % url, end='')
+                print('頁面 %s 下載失敗: %s 重試中...' % (url, res.status_code), end='')
                 print('等待2秒...')
                 #每次重試間隔
                 time.sleep(2)
