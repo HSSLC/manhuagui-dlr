@@ -19,3 +19,6 @@ required:
 
 # 附註
 程式隨便拿沒關係，但不要把他當成自己原創的，謝謝
+
+# 更多資訊
+https://incognitas.net/works/downloader-1
