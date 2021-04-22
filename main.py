@@ -38,7 +38,7 @@ def main():
     for author in authors_link:
         authors.append(author.text)
     authors = '、'.join(authors)
-    config_json = generate_config(title.text, authors)
+    config_json = generate_config(title.text, authors, cid=checked_id)
     links = bs.select('.chapter-list a')
     if not links:
         links = bs4.BeautifulSoup(lzstring.LZString().decompressFromBase64(bs.select('#__VIEWSTATE')[0].attrs.get('value')), 'html.parser').select('.chapter-list a')
