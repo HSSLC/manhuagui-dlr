@@ -1,7 +1,7 @@
 # Development by HSSLCreative
 # Date: 2020/5/6
 
-import requests, os, time, re
+import os, time, re
 from get import get
 from PIL import Image
 from proxy import requests_get
