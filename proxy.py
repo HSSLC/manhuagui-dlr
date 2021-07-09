@@ -4,8 +4,8 @@ import random
 #none for no proxy
 #single for single proxy
 #pool for random proxy in proxy pool
-proxy_config = 'single'
-verify = False
+proxy_config = 'none'
+verify = True
 
 #add your proxy list in proxy pool
 proxy_pool = [
