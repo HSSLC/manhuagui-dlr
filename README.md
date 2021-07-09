@@ -4,11 +4,13 @@
 
 包含自動webp->jpg，可選
 
-初始化完後就能完全放置，過程中只有主控台視窗，可以繼續使用電腦不受影響
+初始化完後就能完全放置，過程中只有主控台視窗，可以繼續使用電腦不受影響  
+
+支援proxy與proxy pool，設定方式請參考更多資訊
 
 執行完後可參考[這裡](https://github.com/HSSLC/kc-generator)做下一步處理
 
-required:  
+requirement:  
 * lzstring
 * requests
 * Pillow
