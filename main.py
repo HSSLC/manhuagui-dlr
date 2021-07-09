@@ -1,7 +1,7 @@
 # Development by HSSLCreative
 # Date: 2020/5/6
 
-import re, time, bs4, requests, lzstring
+import re, time, bs4, lzstring
 from download import downloadCh
 from generate_config import generate_config
 from proxy import requests_get
