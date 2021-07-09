@@ -1,31 +1,33 @@
 # Development by HSSLCreative
 # Date: 2020/5/6
 
-import re, time, bs4, requests, lzstring
+import re, time, bs4, lzstring
 from download import downloadCh
 from generate_config import generate_config
+from proxy import requests_get
 
-check_re = r'^https?://([a-zA-Z0-9]*\.)?manhuagui\.com/comic/([0-9]+)/?'
+check_re = r'^(https?://([a-zA-Z0-9]*\.)?manhuagui\.com/comic/)?([0-9]+)/?'
 request_url = 'https://tw.manhuagui.com/comic/%s'
 host = 'https://tw.manhuagui.com'
 
 def main():
     print('僅供學術研究交流使用，勿作為商業用途')
     while True:
-        print('輸入URL:')
+        print('輸入URL或是ID:')
         #格式:https://*.manhuagui.com/comic/XXXXX
         #是否進入章節都沒關係
         #例如https://*.manhuagui.com/comic/XXXXX/XXXXX.html也行
         #反正要得只有id
+        #所以純ID也可以
         url = input()
         try:
-            checked_id = re.match(check_re, url).group(2)
+            checked_id = re.match(check_re, url).group(3)
             break
         except:
             print('無效的網址')
             continue
     try:
-        res = requests.get(request_url % checked_id)
+        res = requests_get(request_url % checked_id)
         res.raise_for_status()
     except:
         print('錯誤:可能是沒網路或被ban ip?')
@@ -38,7 +40,7 @@ def main():
     for author in authors_link:
         authors.append(author.text)
     authors = '、'.join(authors)
-    config_json = generate_config(title.text, authors)
+    config_json = generate_config(title.text, authors, cid=checked_id)
     links = bs.select('.chapter-list a')
     if not links:
         links = bs4.BeautifulSoup(lzstring.LZString().decompressFromBase64(bs.select('#__VIEWSTATE')[0].attrs.get('value')), 'html.parser').select('.chapter-list a')
@@ -46,6 +48,13 @@ def main():
     ch_list = []
     for link in links:
         ch_list.append([link.attrs['title'], link.attrs['href']])
+    #sorting
+    def sort_lambda(n):
+        try:
+            return float(re.search('(\d+(\.\d+)?)', n[0]).group(0))
+        except:
+            return 0
+    ch_list.sort(key=sort_lambda)
     print('編號 對應名稱')
     for ch_index in range(len(ch_list)):
         ch = ch_list[ch_index]
