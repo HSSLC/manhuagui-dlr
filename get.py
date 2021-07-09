@@ -3,13 +3,14 @@
 
 import requests, re, lzstring
 from parse import packed
+from proxy import requests_get
 
 lz = lzstring.LZString()
 
 def get(url):
     print('connecting...')
     try:
-        res = requests.get(url)
+        res = requests_get(url)
     except:
         print('%s取得失敗' % url)
         return False

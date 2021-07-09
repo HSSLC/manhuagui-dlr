@@ -4,6 +4,7 @@
 import requests, os, time, re
 from get import get
 from PIL import Image
+from proxy import requests_get
 
 def downloadCh(url, config_json=None):
     def downloadPg(url, e, m, counter):
@@ -20,10 +21,11 @@ def downloadCh(url, config_json=None):
         #單頁最大重試次數
         for i in range(10):
             try:
-                res = requests.get(url, params={'e':e, 'm':m}, headers = h, timeout=10)
+                res = None
+                res = requests_get(url, params={'e':e, 'm':m}, headers = h, timeout=10)
                 res.raise_for_status()
             except:
-                print('頁面 %s 下載失敗: %s 重試中...' % (url, res.status_code), end='')
+                print('頁面 %s 下載失敗: %s 重試中...' % (url, res.status_code if res else 'OTHER'), end='')
                 print('等待2秒...')
                 #每次重試間隔
                 time.sleep(2)

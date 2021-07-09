@@ -4,6 +4,7 @@
 import re, time, bs4, requests, lzstring
 from download import downloadCh
 from generate_config import generate_config
+from proxy import requests_get
 
 check_re = r'^(https?://([a-zA-Z0-9]*\.)?manhuagui\.com/comic/)?([0-9]+)/?'
 request_url = 'https://tw.manhuagui.com/comic/%s'
@@ -26,7 +27,7 @@ def main():
             print('無效的網址')
             continue
     try:
-        res = requests.get(request_url % checked_id)
+        res = requests_get(request_url % checked_id)
         res.raise_for_status()
     except:
         print('錯誤:可能是沒網路或被ban ip?')
