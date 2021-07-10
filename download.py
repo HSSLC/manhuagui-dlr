@@ -62,7 +62,7 @@ def downloadCh(url, config_json=None):
     path = j['path']
     i = 1
     for filename in j['files']:
-        pgUrl = 'https://i.hamreus.com' + path +  filename
+        pgUrl = 'https://i.hamreus.com' + path + filename
         print(os.path.basename(pgUrl))
         print('%s / %s' % (i, length), end='\r')
         downloadPg(pgUrl, e, m, i)
