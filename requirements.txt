@@ -1,0 +1,4 @@
+lzstring
+beautifulsoup4
+requests
+pillow
