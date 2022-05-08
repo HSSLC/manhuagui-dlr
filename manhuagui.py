@@ -1,3 +1,4 @@
+from unittest import skip
 import lzstring
 import re
 import os
@@ -15,7 +16,7 @@ class manhuagui_comic:
     _tunnel_base = '.hamreus.com' # image bed base
     _tunnels = ['i', 'eu', 'us']
 
-    def __init__(self, bid, proxies=None, proxy_config={'mode': 'none', 'verify': True}, convert=True, tunnel=0):
+    def __init__(self, bid, proxies=None, proxy_config={'mode': 'none', 'verify': True}, convert=True, tunnel=0, skip_existed=False):
         self._bid = bid # book id
         self._url = manhuagui_comic._comic_url_base + str(bid) # comic url
         self._convert = convert # convert to jpg
@@ -36,6 +37,7 @@ class manhuagui_comic:
             raise ValueError("invalid proxy config")
         
         self._proxy_config = proxy_config # proxy action settings
+        self._skip_existed=skip_existed # skip existed file
 
     #private functions
     def _requests_get(self, *args, **kwargs): # requests wrapper of switch proxy config
@@ -74,9 +76,9 @@ class manhuagui_comic:
         m = re.match(r'^.*\}\(\'(.*)\',(\d*),(\d*),\'([\w|\+|\/|=]*)\'.*$', res.text)
         return manhuagui_comic._packed(m.group(1), int(m.group(2)), int(m.group(3)), lz.decompressFromBase64(m.group(4)).split('|'))
 
-    def _download_page(self, url, e, m, rawfolder, jpgfolder, filename, max_retry=10, retry_interval=2, skip_existed=False):
-        if skip_existed and os.path.isfile(os.path.join(rawfolder, filename)):
-            return
+    def _download_page(self, url, e, m, rawfolder, jpgfolder, filename, max_retry=10, retry_interval=2):
+        if self._skip_existed and os.path.isfile(os.path.join(rawfolder, filename)):
+            return True
         http_header = {'accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
         'accept-encoding': 'gzip, deflate, br',
         'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6',
@@ -134,8 +136,9 @@ class manhuagui_comic:
         for i, filename in enumerate(chapter_info['files']):
             page_url = self._tunnel + path + filename
             yield (page_url, filename, length, i) # report progress
-            self._download_page(page_url, e, m, rawfolder, jpgfolder, f'{i}_{filename}') # download image
-            time.sleep(delay)
+            # download image
+            if not self._download_page(page_url, e, m, rawfolder, jpgfolder, f'{i}_{filename}'): # return True means file skiped
+                time.sleep(delay) # delay when file is not skiped
     #methods
 
     def load_info(self): # load book info
