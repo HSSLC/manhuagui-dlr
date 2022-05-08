@@ -159,7 +159,7 @@ class manhuagui_comic:
         authors = []
         for author in bs.select('a[href^="/author"]'):
             authors.append(author.text)
-        metadata.setdefault('authors', authors)
+        metadata['authors'] = authors
 
         # chapters
         section_titles = bs.select('.chapter>h4')
@@ -169,30 +169,31 @@ class manhuagui_comic:
             section_titles = chapters_html.select('h4')
             chapter_sections = chapters_html.select('.chapter-list')
         
-        sections = {}
+        sections = []
         chapters = []
         for i, chapter_section in enumerate(chapter_sections):
             # run in each .chapter-list
             section_title = section_titles[i].text
-            chapter_section_list = []
+            section_chapter_list = []
             for ul in chapter_section.select('ul'):
                 # run in each .chapter-list ul
                 chapter_list_in_one_ul = []
                 for a in ul.select('a'):
                     # run in each .chapter-list ul li
-                    chapter_list_in_one_ul.append({'chname': a.attrs['title'], 'url': a.attrs['href']})
+                    chapter_list_in_one_ul.append({'chapter_name': a.attrs['title'], 'url': a.attrs['href']})
 
                 chapter_list_in_one_ul.reverse()
                 chapters += chapter_list_in_one_ul
-                chapter_section_list += chapter_list_in_one_ul
+                section_chapter_list += chapter_list_in_one_ul
 
-            sections.setdefault(section_title, chapter_section_list)
+            sections.append({'title': section_title, 'list': section_chapter_list})
         
-        metadata.setdefault('sections', sections)
-        metadata.setdefault('chapters', chapters)
+        metadata['sections'] = sections
+        metadata['chapters'] = chapters
 
         #save
         self.metadata = SimpleNamespace(**metadata)
+        self.raw_metadata = metadata
     
     def download_chapter(self, index, delay=0.5, callback=lambda page_url, filename, length, i: print('%s\n%s/%s...\r' % (page_url, i + 1, length), end=''), by='chapters', section=None):
         if by == 'chapters':
