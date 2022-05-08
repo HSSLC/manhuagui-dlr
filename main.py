@@ -90,7 +90,9 @@ def main():
             print('延遲5秒...')
             #每話間隔5秒
             time.sleep(5)
-main()
+
+if __name__ == '__main__':
+    main()
 
 #各話間會延遲5秒 各頁間會延遲0.5秒
 #防止被ban ip
