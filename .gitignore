@@ -1,4 +1,2 @@
-*
-!manhuagui.py
-!mhg_dlr.py
-!.gitignore
+__pycache__
+downloads

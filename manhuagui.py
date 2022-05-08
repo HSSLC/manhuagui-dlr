@@ -122,9 +122,9 @@ class manhuagui_comic:
         legal_path_chaptername = re.sub(illegal_path_regex, '_', chapter_name)
 
         # make dir
-        rawfolder = os.path.join(legal_path_bookname, 'raw', legal_path_chaptername)
+        rawfolder = os.path.join('downloads', legal_path_bookname, 'raw', legal_path_chaptername)
         os.makedirs(rawfolder, exist_ok=True)
-        jpgfolder = os.path.join(legal_path_bookname, 'jpg', legal_path_chaptername)
+        jpgfolder = os.path.join('downloads', legal_path_bookname, 'jpg', legal_path_chaptername)
         os.makedirs(jpgfolder, exist_ok=True)
 
         length = chapter_info['len'] # pages count
