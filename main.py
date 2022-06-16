@@ -7,8 +7,14 @@ from generate_config import generate_config
 from proxy import requests_get
 
 check_re = r'^(https?://([a-zA-Z0-9]*\.)?manhuagui\.com/comic/)?([0-9]+)/?'
-request_url = 'https://tw.manhuagui.com/comic/%s'
-host = 'https://tw.manhuagui.com'
+# 可以更改分流
+# 分流位置會影響取得的書名等資訊語言 
+# 預設tw為繁體中文
+# 如遇到目錄無法正常取得的情況可以嘗試更改分流位置
+# 如改成www
+subdomain = 'tw'
+request_url = f'https://{subdomain}.manhuagui.com/comic/%s'
+host = f'https://{subdomain}.manhuagui.com'
 
 def main():
     print('僅供學術研究交流使用，勿作為商業用途')
