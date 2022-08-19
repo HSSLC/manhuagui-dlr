@@ -19,13 +19,12 @@ host = f'https://{subdomain}.manhuagui.com'
 def main():
     print('僅供學術研究交流使用，勿作為商業用途')
     while True:
-        print('輸入URL或是ID:')
         #格式:https://*.manhuagui.com/comic/XXXXX
         #是否進入章節都沒關係
         #例如https://*.manhuagui.com/comic/XXXXX/XXXXX.html也行
         #反正要得只有id
         #所以純ID也可以
-        url = input()
+        url = input('輸入URL或是ID: ')
         try:
             checked_id = re.match(check_re, url).group(3)
             break
