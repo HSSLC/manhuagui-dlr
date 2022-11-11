@@ -13,7 +13,7 @@ check_re = r'^(https?://([a-zA-Z0-9]*\.)?manhuagui\.com/comic/)?([0-9]+)/?'
 # 如遇到目錄無法正常取得的情況可以嘗試更改分流位置
 # 如改成www
 subdomain = 'tw'
-request_url = f'https://{subdomain}.manhuagui.com/comic/%s'
+request_url = f'https://{subdomain}.manhuagui.com/comic/%s/'
 host = f'https://{subdomain}.manhuagui.com'
 
 def main():
