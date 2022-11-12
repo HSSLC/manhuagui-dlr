@@ -25,3 +25,10 @@ manhuagui下載器
 
 # 更多資訊
 https://incognitas.net/works/downloader-1
+
+## 選用功能
+圖片檔名預設情況下是用URI編碼過的，若要在下載時維持原文檔名，可以去`download.py`將解碼的片段去除註解  
+```
+# filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
+```
+預設為不解碼是因為非ascii字元可能會出現的問題較多，如亂碼或是容易出現在搜尋結果中

@@ -32,7 +32,9 @@ def downloadCh(url, config_json=None):
                 #每次重試間隔
                 time.sleep(2)
                 continue
-            filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
+            filename = str(counter) + '_' + os.path.basename(url)
+            # uncomment this line if you want to parse url encoding for filename
+            # filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
             file = open(filename,'wb')
             for chunk in res.iter_content(100000):
                 file.write(chunk)
