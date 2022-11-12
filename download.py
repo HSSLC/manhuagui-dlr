@@ -2,6 +2,8 @@
 # Date: 2020/5/6
 
 import os, time, re
+import urllib.parse
+
 from get import get
 from PIL import Image
 from proxy import requests_get
@@ -30,7 +32,7 @@ def downloadCh(url, config_json=None):
                 #每次重試間隔
                 time.sleep(2)
                 continue
-            filename = str(counter) + '_' + os.path.basename(url)
+            filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
             file = open(filename,'wb')
             for chunk in res.iter_content(100000):
                 file.write(chunk)
