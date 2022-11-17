@@ -35,7 +35,7 @@ def main():
         res = requests_get(request_url % checked_id)
         res.raise_for_status()
     except:
-        print('錯誤:可能是沒網路或被ban ip?')
+        print('Error: ID invaild or no internet connection or your IP got banned')
         return
     bs = bs4.BeautifulSoup(res.text, 'html.parser')
     title = bs.select('.book-title h1')[0]
