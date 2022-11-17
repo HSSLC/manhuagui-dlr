@@ -32,16 +32,24 @@ def downloadCh(url, config_json=None):
                 #每次重試間隔
                 time.sleep(2)
                 continue
-            filename = str(counter) + '_' + os.path.basename(url)
+            filename = f'{counter}_{os.path.basename(url)}'
+            
             # uncomment this line if you want to parse url encoding for filename
             # filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
+
+            # cutting too long filename
+            extendingover = len(os.path.join(os.getcwd(), filename)) - 260
+            if extendingover > 0:
+                base, ext = os.path.splitext(os.path.basename(url))
+                filename = f'{counter}_{base[:-extendingover]}{ext}'
+            
             file = open(filename,'wb')
             for chunk in res.iter_content(100000):
                 file.write(chunk)
             file.close()
             #轉檔 調整為False將不會轉檔
             if True:
-                output_filename = filename + '.jpg'
+                output_filename = os.path.splitext(filename)[0] + '.jpg'
                 src_filename = os.path.join('..', '..', 'jpg', cname, output_filename)
                 im = Image.open(filename)
                 im.save(src_filename, 'jpeg')
