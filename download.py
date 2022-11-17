@@ -34,8 +34,8 @@ def downloadCh(url, config_json=None):
                 continue
             filename = f'{counter}_{os.path.basename(url)}'
             
-            # uncomment this line if you want to parse url encoding for filename
-            # filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
+            # comment this line if you don't want to parse url encoding for filename
+            filename = str(counter) + '_' + os.path.basename(urllib.parse.unquote(url))
 
             # cutting too long filename
             extendingover = len(os.path.join(os.getcwd(), filename)) - 260
