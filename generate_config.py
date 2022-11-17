@@ -14,5 +14,5 @@ def generate_config(title, creator, language='zh', folder='jpg', width=800, heig
     config['height'] = height
     config['cover'] = cover
     config['cid'] = cid
-    j = json.dumps(config)
+    j = json.dumps(config, ensure_ascii=False, indent=2)
     return j

@@ -64,7 +64,7 @@ def downloadCh(url, config_json=None):
     chdir(os.path.join(re.sub(r'[\\/:*?"<>|]', '_', bname), 'jpg', cname))
     os.chdir(os.path.join('..', '..'))
     if config_json:
-        with open('config.json', 'w') as config:
+        with open('config.json', 'w', encoding='utf-8') as config:
             config.write(config_json)
     chdir(os.path.join('raw', cname))
     length = j['len']
