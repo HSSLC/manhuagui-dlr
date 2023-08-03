@@ -121,19 +121,6 @@ class manhuagui_comic:
             return requests.get(*args, **kwargs, proxies=random.choice(self._proxies), verify=self._proxy_config['verify'])
         else:
             return requests.get(*args, **kwargs)
-    
-
-
-    def _packed(functionFrame, a, c, data): # parse meta data
-        e = lambda innerC: ('' if innerC < a else e(int(innerC / a))) + (chr(innerC % a + 29) if innerC % a > 35 else convert_base(innerC % a, 36))
-        c -= 1
-        d = {}
-        while c + 1:
-            d[e(c)] = e(c) if data[c] == '' else data[c]
-            c -= 1
-        pieces = re.split(r'(\b\w+\b)', functionFrame)
-        js = ''.join([d[x] if x in d else x for x in pieces]).replace('\\\'', '\'')
-        return json.loads(re.search(r'^.*\((\{.*\})\).*$', js).group(1))
 
     def _get_chapter_struct(self, url): # load chapter info
         lz = lzstring.LZString()
@@ -142,7 +129,7 @@ class manhuagui_comic:
         except:
             raise Exception(f'Request failed: {url}')
         m = re.match(r'^.*\}\(\'(.*)\',(\d*),(\d*),\'([\w|\+|\/|=]*)\'.*$', res.text)
-        return self._packed(m.group(1), int(m.group(2)), int(m.group(3)), lz.decompressFromBase64(m.group(4)).split('|'))
+        return _packed(m.group(1), int(m.group(2)), int(m.group(3)), lz.decompressFromBase64(m.group(4)).split('|'))
 
     def _download_page(self, url : str, e, m, rawfolder, jpgfolder, filename, max_retry=10, retry_interval=2):
         if self._skip_existed and os.path.isfile(os.path.join(rawfolder, filename)):
@@ -265,3 +252,14 @@ def convert_base(value, base):
         value //= base
 
     return result
+
+def _packed(functionFrame, a, c, data): # parse meta data
+        e = lambda innerC: ('' if innerC < a else e(int(innerC / a))) + (chr(innerC % a + 29) if innerC % a > 35 else convert_base(innerC % a, 36))
+        c -= 1
+        d = {}
+        while c + 1:
+            d[e(c)] = e(c) if data[c] == '' else data[c]
+            c -= 1
+        pieces = re.split(r'(\b\w+\b)', functionFrame)
+        js = ''.join([d[x] if x in d else x for x in pieces]).replace('\\\'', '\'')
+        return json.loads(re.search(r'^.*\((\{.*\})\).*$', js).group(1))
