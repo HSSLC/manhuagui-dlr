@@ -26,15 +26,16 @@ HTTP_HEADER = {
 
 
 class manhuagui_comic:
-    _HOST = 'https://tw.manhuagui.com' # tw host name
-    _COMIC_URL_BASE = _HOST + '/comic/' # comic url base
     _CHANNEL_BASE = '.hamreus.com' # image bed base
     _CHANNELS = ['i', 'eu', 'us']
     _DOWNLOAD_FOLDER = 'Downloads'
 
-    def __init__(self, bid : int, proxies : dict=None, proxy_config : dict={'mode': 'none', 'verify': True}, convert : bool=True, tunnel : int=0, skip_existed : bool=False, page_delay : float=1):
+    def __init__(self, bid : int, proxies : dict=None, proxy_config : dict={'mode': 'none', 'verify': True}, convert : bool=True, tunnel : int=0, skip_existed : bool=False, page_delay : float=1, subdomain : str='tw'):
+        self._host = f"https://{subdomain}.manhuagui.com"
+        self._comic_url_base = self._host + '/comic/'
+        
         self._bid = bid # book id
-        self._url = manhuagui_comic._COMIC_URL_BASE + str(bid) # comic url
+        self._url = manhuagui_comic._comic_url_base + str(bid) # comic url
         self._convert = convert # convert to jpg
         self._page_delay = page_delay # delay between pages
 
@@ -237,10 +238,10 @@ class manhuagui_comic:
         
         # get url by index
         if by == 'chapters':
-            chapter_url = self._HOST + self.metadata.chapters[index]['url']
+            chapter_url = self._host + self.metadata.chapters[index]['url']
         elif by == 'sections':
             try:
-                chapter_url = self._HOST + self.metadata.sections[section]['list'][index]['url']
+                chapter_url = self._host + self.metadata.sections[section]['list'][index]['url']
             except:
                 raise Exception('Specific section error')
         else:
