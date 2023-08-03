@@ -26,19 +26,20 @@ HTTP_HEADER = {
 
 
 class manhuagui_comic:
-    _host = 'https://tw.manhuagui.com' # tw host name
-    _comic_url_base = _host + '/comic/' # comic url base
-    _tunnel_base = '.hamreus.com' # image bed base
-    _tunnels = ['i', 'eu', 'us']
+    _HOST = 'https://tw.manhuagui.com' # tw host name
+    _COMIC_URL_BASE = _HOST + '/comic/' # comic url base
+    _CHANNEL_BASE = '.hamreus.com' # image bed base
+    _CHANNELS = ['i', 'eu', 'us']
+    _DOWNLOAD_FOLDER = 'Downloads'
 
     def __init__(self, bid : int, proxies : dict=None, proxy_config : dict={'mode': 'none', 'verify': True}, convert : bool=True, tunnel : int=0, skip_existed : bool=False, page_delay : float=1):
         self._bid = bid # book id
-        self._url = manhuagui_comic._comic_url_base + str(bid) # comic url
+        self._url = manhuagui_comic._COMIC_URL_BASE + str(bid) # comic url
         self._convert = convert # convert to jpg
         self._page_delay = page_delay # delay between pages
 
         try:
-            self._tunnel = f'https://{manhuagui_comic._tunnels[tunnel]}{manhuagui_comic._tunnel_base}' # set which image bed to use
+            self._tunnel = f'https://{manhuagui_comic._CHANNELS[tunnel]}{manhuagui_comic._CHANNEL_BASE}' # set which image bed to use
         except:
             raise Exception('tunnel %d not exists' % tunnel)
         
@@ -200,9 +201,9 @@ class manhuagui_comic:
         legal_path_chaptername = re.sub(illegal_path_regex, '_', chapter_name)
 
         # make dir
-        rawfolder = os.path.join('downloads', legal_path_bookname, 'raw', legal_path_chaptername)
+        rawfolder = os.path.join(self._DOWNLOAD_FOLDER, legal_path_bookname, 'raw', legal_path_chaptername)
         os.makedirs(rawfolder, exist_ok=True)
-        jpgfolder = os.path.join('downloads', legal_path_bookname, 'jpg', legal_path_chaptername)
+        jpgfolder = os.path.join(self._DOWNLOAD_FOLDER, legal_path_bookname, 'jpg', legal_path_chaptername)
         os.makedirs(jpgfolder, exist_ok=True)
 
         # get chapter info
@@ -236,10 +237,10 @@ class manhuagui_comic:
         
         # get url by index
         if by == 'chapters':
-            chapter_url = self._host + self.metadata.chapters[index]['url']
+            chapter_url = self._HOST + self.metadata.chapters[index]['url']
         elif by == 'sections':
             try:
-                chapter_url = self._host + self.metadata.sections[section]['list'][index]['url']
+                chapter_url = self._HOST + self.metadata.sections[section]['list'][index]['url']
             except:
                 raise Exception('Specific section error')
         else:
