@@ -35,12 +35,12 @@ class manhuagui_comic:
         self._comic_url_base = self._host + '/comic/'
         
         self._bid = bid # book id
-        self._url = manhuagui_comic._comic_url_base + str(bid) # comic url
+        self._url = self._comic_url_base + str(bid) # comic url
         self._convert = convert # convert to jpg
         self._page_delay = page_delay # delay between pages
 
         try:
-            self._tunnel = f'https://{manhuagui_comic._CHANNELS[tunnel]}{manhuagui_comic._CHANNEL_BASE}' # set which image bed to use
+            self._tunnel = f'https://{self._CHANNELS[tunnel]}{self._CHANNEL_BASE}' # set which image bed to use
         except:
             raise Exception('tunnel %d not exists' % tunnel)
         
@@ -142,7 +142,7 @@ class manhuagui_comic:
         except:
             raise Exception(f'Request failed: {url}')
         m = re.match(r'^.*\}\(\'(.*)\',(\d*),(\d*),\'([\w|\+|\/|=]*)\'.*$', res.text)
-        return manhuagui_comic._packed(m.group(1), int(m.group(2)), int(m.group(3)), lz.decompressFromBase64(m.group(4)).split('|'))
+        return self._packed(m.group(1), int(m.group(2)), int(m.group(3)), lz.decompressFromBase64(m.group(4)).split('|'))
 
     def _download_page(self, url : str, e, m, rawfolder, jpgfolder, filename, max_retry=10, retry_interval=2):
         if self._skip_existed and os.path.isfile(os.path.join(rawfolder, filename)):
