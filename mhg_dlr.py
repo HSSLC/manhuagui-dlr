@@ -13,6 +13,7 @@ except:
     exit(1)
 
 # create book object
+# 如有調整轉檔、proxy、下載間隔時間、線路分流等需求，請修改以下的建構參數
 manhuagui_book = manhuagui.manhuagui_comic(checked_id)
 chapters = manhuagui_book.metadata.chapters
 
