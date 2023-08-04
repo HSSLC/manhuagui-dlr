@@ -50,7 +50,7 @@ skip_existed: 是否跳過已下載的圖片（當檔名已存在）
     {True | False （預設）}
 
 page_delay: 每頁之間的下載間隔時間（秒）
-    float: （預設為1）
+    float: （預設為0.5）
 
     如果下載間隔太短會被ban IP好幾天，請自行取決調整大小
 

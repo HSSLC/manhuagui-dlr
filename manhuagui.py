@@ -30,7 +30,7 @@ class manhuagui_comic:
     _CHANNELS = ['i', 'eu', 'us']
     _DOWNLOAD_FOLDER = 'Downloads'
 
-    def __init__(self, bid : int, proxies : list=None, proxy_config : dict={'mode': 'none', 'verify': True}, convert : bool=True, tunnel : int=0, skip_existed : bool=False, page_delay : float=1, subdomain : str='tw'):
+    def __init__(self, bid : int, proxies : list=None, proxy_config : dict={'mode': 'none', 'verify': True}, convert : bool=True, tunnel : int=0, skip_existed : bool=False, page_delay : float=0.5, subdomain : str='tw'):
         self._host = f"https://{subdomain}.manhuagui.com"
         self._comic_url_base = self._host + '/comic/'
         
