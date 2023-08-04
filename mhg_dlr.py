@@ -32,6 +32,7 @@ for exp in select_exp:
     else:
         select_chapters.append(int(exp))
 
+manhuagui_book.write_metadata()
 for chapter_index in select_chapters:
     manhuagui_book.download_chapter(chapter_index)
     time.sleep(5)

@@ -113,6 +113,22 @@ class manhuagui_comic:
         self.metadata = SimpleNamespace(**metadata)
         self.raw_metadata = metadata
 
+    def write_metadata(self):
+        chapter_folder = os.path.join(self._DOWNLOAD_FOLDER, self.metadata.title)
+        os.makedirs(chapter_folder, exist_ok=True)
+        with open(os.path.join(chapter_folder, 'config.json'), 'w', encoding='utf-8') as f:
+            config = {
+                'title': self.metadata.title,
+                'authors': '、'.join(self.metadata.authors),
+                'direction': 'rl',
+                'language': 'zh',
+                'folder': 'jpg',
+                'width': 800,
+                'height': 1280,
+                'cover': '',
+                'bid': self._bid,
+            }
+            json.dump(config, f, ensure_ascii=False, indent=4)
     #private functions
     def _requests_get(self, *args, **kwargs): # requests wrapper of switch proxy config
         if self._proxy_config['mode'] == 'single':
