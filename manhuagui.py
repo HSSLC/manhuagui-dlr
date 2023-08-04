@@ -270,12 +270,12 @@ def convert_base(value, base):
     return result
 
 def _packed(functionFrame, a, c, data): # parse meta data
-        e = lambda innerC: ('' if innerC < a else e(int(innerC / a))) + (chr(innerC % a + 29) if innerC % a > 35 else convert_base(innerC % a, 36))
+    e = lambda innerC: ('' if innerC < a else e(int(innerC / a))) + (chr(innerC % a + 29) if innerC % a > 35 else convert_base(innerC % a, 36))
+    c -= 1
+    d = {}
+    while c + 1:
+        d[e(c)] = e(c) if data[c] == '' else data[c]
         c -= 1
-        d = {}
-        while c + 1:
-            d[e(c)] = e(c) if data[c] == '' else data[c]
-            c -= 1
-        pieces = re.split(r'(\b\w+\b)', functionFrame)
-        js = ''.join([d[x] if x in d else x for x in pieces]).replace('\\\'', '\'')
-        return json.loads(re.search(r'^.*\((\{.*\})\).*$', js).group(1))
+    pieces = re.split(r'(\b\w+\b)', functionFrame)
+    js = ''.join([d[x] if x in d else x for x in pieces]).replace('\\\'', '\'')
+    return json.loads(re.search(r'^.*\((\{.*\})\).*$', js).group(1))
