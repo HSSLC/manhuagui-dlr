@@ -158,7 +158,7 @@ class manhuagui_comic:
                 res = self._requests_get(url, params={'e': e, 'm': m}, headers=HTTP_HEADER, timeout=10) # download image
                 res.raise_for_status()
             except Exception as e:
-                print(f"Error: {e}, retrying ({i + 1})...")
+                print(f"Page {filename} download failed: {res.status_code if res else 'OTHER'} Retry: ({i + 1}/{max_retry})...")
                 time.sleep(retry_interval)
                 continue
             
@@ -195,9 +195,9 @@ class manhuagui_comic:
         # get chapter name
         if not chapter_info:
             raise Exception(f"Failed to get metadata: {url}")
-        chapter_name = chapter_info['cname'] # chapter name
 
-        print(f"{chapter_name}...")
+        # get chapter name
+        chapter_name = chapter_info['cname']    # chapter name
 
         # replace iligal file path name in title and chapter name
         illegal_path_regex = r'[\\/:*?"<>|]'
@@ -215,6 +215,8 @@ class manhuagui_comic:
         e = chapter_info['sl']['e']     # verify code
         m = chapter_info['sl']['m']     # verify code
         path = chapter_info['path']     # image path
+
+        print(f"下載 {self.metadata.title} {chapter_name} 中 共{length}頁")
 
         # download pages
         for i, filename in enumerate(chapter_info['files']):
@@ -237,7 +239,7 @@ class manhuagui_comic:
 
         # default callback
         if callback is None:
-            callback = lambda page_url, filename, total_page_count, current_page_number: print(f"{page_url} ({current_page_number + 1}/{total_page_count})")
+            callback = lambda page_url, filename, total_page_count, current_page_number: print(f"{filename} ({current_page_number + 1}/{total_page_count})")
         
         # get url by index
         if by == 'chapters':

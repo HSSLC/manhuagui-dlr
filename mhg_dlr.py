@@ -36,4 +36,5 @@ for exp in select_exp:
 manhuagui_book.write_metadata()
 for chapter_index in select_chapters:
     manhuagui_book.download_chapter(chapter_index)
+    print(f"等待5秒...\n")
     time.sleep(5)
