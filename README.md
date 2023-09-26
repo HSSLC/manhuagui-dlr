@@ -70,5 +70,5 @@ pip install -r requirements.txt
 ```
 
 ## License
-使用需標註來源，自做發言禁止。  
+引用、重製需標註來源，自做發言禁止。  
 僅供個人學術交流使用，勿作為其他用途。
